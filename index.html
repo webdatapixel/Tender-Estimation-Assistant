@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tender & Estimation Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Tender & Estimation Assistant</p>
+            <h1>MEP tender review workspace</h1>
+          </div>
+          <button class="ghost-button" id="loadExample" type="button" title="Load example tender content">
+            <span aria-hidden="true">↺</span>
+            Example
+          </button>
+        </header>
+
+        <section class="input-grid" aria-label="Tender inputs">
+          <div class="panel document-panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Input Documents</h2>
+                <p>PDF, Word, Excel, drawings, BOQ files, specifications</p>
+              </div>
+            </div>
+            <label class="drop-zone" for="fileInput">
+              <input id="fileInput" type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.txt,.rtf,.dwg,.dxf,.png,.jpg,.jpeg">
+              <span class="drop-icon" aria-hidden="true">⇪</span>
+              <strong>Choose tender files</strong>
+              <small>File names and text-readable files are processed locally.</small>
+            </label>
+            <ul class="file-list" id="fileList" aria-live="polite"></ul>
+          </div>
+
+          <div class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Tender Notes</h2>
+                <p>Paste copied content from documents, BOQs, emails, or specs</p>
+              </div>
+            </div>
+            <textarea id="tenderText" spellcheck="true" placeholder="Paste tender document text here..."></textarea>
+            <div class="action-row">
+              <button id="analyzeBtn" class="primary-button" type="button">
+                <span aria-hidden="true">◆</span>
+                Analyze Tender
+              </button>
+              <button id="clearBtn" class="secondary-button" type="button">Clear</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="assumptions" aria-label="Quotation assumptions">
+          <label>
+            Labor %
+            <input id="laborPct" type="number" min="0" max="100" value="28">
+          </label>
+          <label>
+            Overheads %
+            <input id="overheadPct" type="number" min="0" max="100" value="12">
+          </label>
+          <label>
+            Profit %
+            <input id="profitPct" type="number" min="0" max="100" value="10">
+          </label>
+          <label>
+            Contingency %
+            <input id="contingencyPct" type="number" min="0" max="100" value="5">
+          </label>
+        </section>
+
+        <section class="output-grid" aria-label="Tender outputs">
+          <article class="output-card wide">
+            <div class="output-heading">
+              <h2>Project Summary</h2>
+              <button class="icon-button" data-copy="summary" type="button" title="Copy project summary">⧉</button>
+            </div>
+            <div id="summary" class="result-box empty">Run analysis to generate the project summary.</div>
+          </article>
+
+          <article class="output-card">
+            <h2>Important Dates</h2>
+            <div id="dates" class="result-box empty">No dates extracted yet.</div>
+          </article>
+
+          <article class="output-card">
+            <h2>MEP Systems</h2>
+            <div id="systems" class="pill-list empty">No systems identified yet.</div>
+          </article>
+
+          <article class="output-card">
+            <h2>Risks & Missing Information</h2>
+            <div id="risks" class="result-box empty">No risks generated yet.</div>
+          </article>
+
+          <article class="output-card">
+            <h2>Suggested RFIs</h2>
+            <div id="rfis" class="result-box empty">No RFIs generated yet.</div>
+          </article>
+
+          <article class="output-card wide">
+            <div class="output-heading">
+              <h2>Estimation Checklist</h2>
+              <button class="icon-button" data-copy="checklist" type="button" title="Copy checklist">⧉</button>
+            </div>
+            <div id="checklist" class="checklist empty">No checklist generated yet.</div>
+          </article>
+
+          <article class="output-card wide">
+            <div class="output-heading">
+              <h2>Quotation Draft</h2>
+              <div class="button-group">
+                <button class="icon-button" id="copyQuote" type="button" title="Copy quotation draft">⧉</button>
+                <button class="icon-button" id="downloadReport" type="button" title="Download report">↓</button>
+              </div>
+            </div>
+            <div id="quotation" class="quote-box empty">No quotation draft generated yet.</div>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <template id="checkItemTemplate">
+      <label class="check-item">
+        <input type="checkbox">
+        <span></span>
+      </label>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
